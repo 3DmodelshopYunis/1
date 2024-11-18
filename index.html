@@ -68,47 +68,58 @@
             background-color: #ff2b3c;
         }
 
-        /* Modal pəncərələrin dizaynı */
+        /* Modal tərtibatı */
         .modal {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
-            width: 90%;
-            max-width: 400px;
+            z-index: 2000;
+            background: white;
             padding: 20px;
-        }
-
-        .modal h2 {
-            margin-top: 0;
-        }
-
-        .modal form input,
-        .modal form button {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
         }
 
-        .modal form button {
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            margin: 20px 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-footer button {
             background-color: #333;
             color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
             cursor: pointer;
+            border: none;
         }
 
-        .modal form button:hover {
+        .modal-footer button:hover {
             background-color: #444;
         }
 
-        /* Overlay */
+        /* Overlay tərtibatı */
         .overlay {
             display: none;
             position: fixed;
@@ -125,134 +136,4 @@
             padding: 20px;
             background-color: #333;
             color: white;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="search-bar">
-            <input type="text" placeholder="Axtarış et...">
-        </div>
-        <div class="auth-links">
-            <a href="javascript:void(0)" id="signInBtn">Sign In</a>
-            <a href="javascript:void(0)" id="signUpBtn">Sign Up</a>
-            <div id="userProfile" class="user-profile">
-                <div class="profile-container">
-                    <img id="profileImage" src="default-profile.png" alt="Profile">
-                    <span id="userEmail">Gmail: user@gmail.com</span>
-                </div>
-            </div>
-            <a href="javascript:void(0)" id="signOutBtn" class="sign-out-btn">Sign Out</a>
-        </div>
-    </div>
-
-    <!-- Modal Pəncərələr -->
-    <div class="overlay" id="overlay"></div>
-
-    <div id="signInModal" class="modal">
-        <h2>Sign In</h2>
-        <form id="signInFormSubmit">
-            <input type="email" id="signInEmail" placeholder="Gmail daxil edin" required>
-            <input type="password" id="signInPassword" placeholder="Parol" required>
-            <button type="submit">Daxil ol</button>
-        </form>
-    </div>
-
-    <div id="signUpModal" class="modal">
-        <h2>Sign Up</h2>
-        <form id="signUpFormSubmit">
-            <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
-            <input type="password" id="signUpPassword" placeholder="Parol" required>
-            <input type="text" id="nickName" placeholder="Nick Name" required>
-            <button type="submit">Qeydiyyatdan Keç</button>
-        </form>
-    </div>
-
-    <!-- Alt Hissə -->
-    <div class="footer">
-        <p>© 2024, Sketchfab, Inc. All rights reserved.</p>
-    </div>
-
-    <script>
-        // Modal açmaq və bağlamaq üçün funksiyalar
-        const overlay = document.getElementById('overlay');
-        const signInModal = document.getElementById('signInModal');
-        const signUpModal = document.getElementById('signUpModal');
-
-        function openModal(modal) {
-            modal.style.display = 'block';
-            overlay.style.display = 'block';
-        }
-
-        function closeModal() {
-            signInModal.style.display = 'none';
-            signUpModal.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-
-        // Modal düymələri
-        document.getElementById('signInBtn').addEventListener('click', () => openModal(signInModal));
-        document.getElementById('signUpBtn').addEventListener('click', () => openModal(signUpModal));
-        overlay.addEventListener('click', closeModal);
-
-        // Navbar yenilənməsi
-        function updateNavbar() {
-            const userEmail = localStorage.getItem('userEmail');
-            const userNickName = localStorage.getItem('userNickName');
-            const userProfile = document.getElementById('userProfile');
-            const signInButton = document.getElementById('signInBtn');
-            const signUpButton = document.getElementById('signUpBtn');
-            const signOutButton = document.getElementById('signOutBtn');
-            const profileText = document.getElementById('userEmail');
-
-            if (userEmail) {
-                userProfile.style.display = 'flex';
-                signOutButton.style.display = 'inline-block';
-                profileText.textContent = `${userNickName} (${userEmail})`;
-                signInButton.style.display = 'none';
-                signUpButton.style.display = 'none';
-            } else {
-                userProfile.style.display = 'none';
-                signOutButton.style.display = 'none';
-                signInButton.style.display = 'inline-block';
-                signUpButton.style.display = 'inline-block';
-            }
-        }
-
-        // Sign In formu
-        document.getElementById('signInFormSubmit').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            if (email && password) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userNickName', 'User');
-                alert('Daxil oldunuz!');
-                closeModal();
-                updateNavbar();
-            }
-        });
-
-        // Sign Up formu
-        document.getElementById('signUpFormSubmit').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            const nickName = document.getElementById('nickName').value;
-            if (email && password && nickName) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userNickName', nickName);
-                alert('Qeydiyyatdan keçdiniz!');
-                closeModal();
-                updateNavbar();
-            }
-        });
-
-        // Sign Out düyməsi
-        document.getElementById('signOutBtn').addEventListener('click', function() {
-            localStorage.removeItem('userEmail');
-            local
+            text-align: c
