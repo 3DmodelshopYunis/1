@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Sequence</title>
+    <title>Sign In & Sign Up</title>
     <style>
-        /* Body və ümumi tərtibat */
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
-        /* Navbar dizaynı */
         .navbar {
             width: 100%;
             background-color: #333;
@@ -25,13 +22,6 @@
             position: fixed;
             top: 0;
             z-index: 1000;
-        }
-
-        .navbar .search-bar input {
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            width: 250px;
         }
 
         .navbar .auth-links a {
@@ -47,10 +37,15 @@
             background-color: #444;
         }
 
-        .navbar .auth-links .user-profile {
+        .navbar .auth-links .profile-info {
             display: none;
             font-size: 16px;
             color: #fff;
+            margin-right: 10px;
+        }
+
+        .navbar .auth-links .profile-info span {
+            margin-left: 10px;
         }
 
         .navbar .auth-links .sign-out-btn {
@@ -68,15 +63,26 @@
             background-color: #ff2b3c;
         }
 
-        /* Formaların üslubu */
-        .form-container {
-            padding: 20px;
-            margin-top: 100px; /* Navbar-ı üstdə saxlamaq üçün boşluq */
+        .modal {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
         }
 
-        .form-container form input,
-        .form-container form button {
+        .modal h2 {
+            margin: 0 0 20px 0;
+        }
+
+        .modal input,
+        .modal button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -85,34 +91,25 @@
             border: 1px solid #ddd;
         }
 
-        .form-container form button {
+        .modal button {
             background-color: #333;
             color: white;
             cursor: pointer;
         }
 
-        .form-container form button:hover {
+        .modal button:hover {
             background-color: #444;
         }
 
-        .profile-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .profile-container img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        /* Alt Hissə */
-        .footer {
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            text-align: center;
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
     </style>
 </head>
@@ -120,129 +117,109 @@
 
     <!-- Navbar -->
     <div class="navbar">
-        <div class="search-bar">
-            <input type="text" placeholder="Axtarış et...">
-        </div>
         <div class="auth-links">
             <a href="javascript:void(0)" id="signInBtn">Sign In</a>
             <a href="javascript:void(0)" id="signUpBtn">Sign Up</a>
-            <div id="userProfile" class="user-profile">
-                <div class="profile-container">
-                    <img id="profileImage" src="default-profile.png" alt="Profile">
-                    <span id="userEmail">Gmail: user@gmail.com</span>
-                </div>
+            <div id="profileInfo" class="profile-info">
+                <span id="profileNickname"></span>
             </div>
             <a href="javascript:void(0)" id="signOutBtn" class="sign-out-btn">Sign Out</a>
         </div>
     </div>
 
-    <!-- Sayfanın Məzmunu -->
-    <div class="content">
-        <img src="11.png" alt="First Image">
-        <img src="12.png" alt="Second Image">
-        <img src="13.png" alt="Third Image">
-    </div>
-
-    <!-- Sign In Forması -->
-    <div id="signInForm" class="form-container">
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="modal">
         <h2>Sign In</h2>
-        <form id="signInFormSubmit">
+        <form id="signInForm">
             <input type="email" id="signInEmail" placeholder="Gmail daxil edin" required>
             <input type="password" id="signInPassword" placeholder="Parol" required>
             <button type="submit">Daxil ol</button>
         </form>
     </div>
 
-    <!-- Sign Up Forması -->
-    <div id="signUpForm" class="form-container">
+    <!-- Sign Up Modal -->
+    <div id="signUpModal" class="modal">
         <h2>Sign Up</h2>
-        <form id="signUpFormSubmit">
+        <form id="signUpForm">
             <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
             <input type="password" id="signUpPassword" placeholder="Parol" required>
-            <input type="text" id="nickName" placeholder="Nick Name" required>
+            <input type="text" id="signUpNickname" placeholder="Nick Name" required>
             <button type="submit">Qeydiyyatdan Keç</button>
         </form>
     </div>
 
-    <!-- Alt Hissə -->
-    <div class="footer">
-        <p>© 2024, Sketchfab, Inc. All rights reserved.</p>
-    </div>
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
 
     <script>
-        // Sign In formu
-        document.getElementById('signInFormSubmit').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            if (email && password) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userNickName', 'User');
-                alert('Daxil oldunuz!');
-                updateNavbar();
-            }
-        });
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const overlay = document.getElementById('overlay');
+        const profileInfo = document.getElementById('profileInfo');
+        const profileNickname = document.getElementById('profileNickname');
 
-        // Sign Up formu
-        document.getElementById('signUpFormSubmit').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            const nickName = document.getElementById('nickName').value;
-            if (email && password && nickName) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userNickName', nickName);
-                alert('Qeydiyyatdan keçdiniz!');
-                updateNavbar();
-            }
-        });
+        function openModal(modal) {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        }
 
-        // Profilin göstərilməsi və düymələrin dəyişməsi
+        function closeModal() {
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
         function updateNavbar() {
-            const userEmail = localStorage.getItem('userEmail');
-            const userNickName = localStorage.getItem('userNickName');
-            const userProfile = document.getElementById('userProfile');
-            const signInButton = document.getElementById('signInBtn');
-            const signUpButton = document.getElementById('signUpBtn');
-            const signOutButton = document.getElementById('signOutBtn');
-            const profileText = document.getElementById('userEmail');
-
-            if (userEmail) {
-                userProfile.style.display = 'flex';
-                signOutButton.style.display = 'inline-block';
-                profileText.textContent = `${userNickName} (${userEmail})`;
-                signInButton.style.display = 'none';
-                signUpButton.style.display = 'none';
+            const email = localStorage.getItem('userEmail');
+            const nickname = localStorage.getItem('userNickname');
+            if (email) {
+                profileNickname.textContent = `${nickname} (${email})`;
+                profileInfo.style.display = 'inline-block';
+                signOutBtn.style.display = 'inline-block';
+                signInBtn.style.display = 'none';
+                signUpBtn.style.display = 'none';
             } else {
-                userProfile.style.display = 'none';
-                signOutButton.style.display = 'none';
-                signInButton.style.display = 'inline-block';
-                signUpButton.style.display = 'inline-block';
+                profileInfo.style.display = 'none';
+                signOutBtn.style.display = 'none';
+                signInBtn.style.display = 'inline-block';
+                signUpBtn.style.display = 'inline-block';
             }
         }
 
-        // Sign Out düyməsi
-        document.getElementById('signOutBtn').addEventListener('click', function() {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userNickName');
-            alert('Hesabdan çıxış edildi!');
+        signInBtn.addEventListener('click', () => openModal(signInModal));
+        signUpBtn.addEventListener('click', () => openModal(signUpModal));
+        overlay.addEventListener('click', closeModal);
+
+        document.getElementById('signInForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userNickname', 'User');
+            closeModal();
             updateNavbar();
-            location.reload();
         });
 
-        // Formları gizlətmək və göstəriciləri dəyişdirmək
-        document.getElementById('signInBtn').addEventListener('click', function() {
-            document.getElementById('signInForm').style.display = 'block';
-            document.getElementById('signUpForm').style.display = 'none';
+        document.getElementById('signUpForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const nickname = document.getElementById('signUpNickname').value;
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userNickname', nickname);
+            closeModal();
+            updateNavbar();
         });
 
-        document.getElementById('signUpBtn').addEventListener('click', function() {
-            document.getElementById('signUpForm').style.display = 'block';
-            document.getElementById('signInForm').style.display = 'none';
+        signOutBtn.addEventListener('click', () => {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userNickname');
+            updateNavbar();
         });
 
-        // Dəyişiklikləri başlatmaq
         window.onload = updateNavbar;
     </script>
+
 </body>
 </html>
