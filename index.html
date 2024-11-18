@@ -5,7 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Sequence</title>
     <style>
-        /* Əvvəlki stil hissəsi buraya eyni qalır */
+        /* Body və ümumi tərtibat */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar dizaynı */
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            width: 250px;
+        }
+
+        .navbar .auth-links a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .auth-links a:hover {
+            background-color: #444;
+        }
+
+        .navbar .auth-links .user-profile {
+            display: none;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        /* Şəkillərin göstərilməsi */
+        img {
+            width: 100%;
+            max-width: 1500px;
+            margin-bottom: 0;
+        }
+
+        /* Formaların tərtibatı */
+        .form-container {
+            padding: 20px;
+            margin-top: 100px; /* Navbar-ı üstdə saxlamaq üçün boşluq */
+        }
+
+        .form-container form input,
+        .form-container form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .form-container form button {
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-container form button:hover {
+            background-color: #444;
+        }
+
+        /* Aşağı hissə */
+        .footer {
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -16,9 +107,9 @@
             <input type="text" placeholder="Axtarış et...">
         </div>
         <div class="auth-links">
-            <a href="#signInForm" class="btn">Sign In</a>
-            <a href="#signUpForm" class="btn">Sign Up</a>
-            <div id="userProfile" class="user-profile" style="display: none;">
+            <a href="#signInForm" class="btn" id="signInBtn">Sign In</a>
+            <a href="#signUpForm" class="btn" id="signUpBtn">Sign Up</a>
+            <div id="userProfile" class="user-profile">
                 <span id="userEmail">Gmail: user@gmail.com</span>
             </div>
         </div>
@@ -90,47 +181,48 @@
     </div>
 
     <script>
-        // Formları işə salmaq üçün event listener
+        // Sign In formu
         document.getElementById('signInFormSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
             if (email && password) {
-                // Giriş et
-                localStorage.setItem('userEmail', email); // Gmail-i saxlayırıq
+                // Gmail məlumatını saxlayırıq
+                localStorage.setItem('userEmail', email);
                 alert('Daxil oldunuz!');
                 updateNavbar();
             }
         });
 
+        // Sign Up formu
         document.getElementById('signUpFormSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
             const email = document.getElementById('signUpEmail').value;
             const password = document.getElementById('signUpPassword').value;
             if (email && password) {
-                // Qeydiyyatdan keç
-                localStorage.setItem('userEmail', email); // Gmail-i saxlayırıq
+                // Gmail məlumatını saxlayırıq
+                localStorage.setItem('userEmail', email);
                 alert('Qeydiyyatdan keçdiniz!');
                 updateNavbar();
             }
         });
 
-        // Navbar'dakı istifadəçi profilini güncellemə funksiyası
+        // Navbar-da istifadəçi məlumatını göstərmək
         function updateNavbar() {
             const userEmail = localStorage.getItem('userEmail');
             const userProfile = document.getElementById('userProfile');
-            const signInButton = document.querySelector('.btn[href="#signInForm"]');
-            const signUpButton = document.querySelector('.btn[href="#signUpForm"]');
+            const signInButton = document.getElementById('signInBtn');
+            const signUpButton = document.getElementById('signUpBtn');
 
             if (userEmail) {
                 document.getElementById('userEmail').textContent = `Gmail: ${userEmail}`;
-                userProfile.style.display = 'block'; // Profil görünsün
+                userProfile.style.display = 'block'; // Profil göstərilsin
                 signInButton.style.display = 'none'; // Sign In düyməsini gizlə
                 signUpButton.style.display = 'none'; // Sign Up düyməsini gizlə
             }
         }
 
-        // Sayfa yükləndikdə varsa, istifadəçi məlumatlarını yenilə
+        // Sayfa yükləndikdə istifadəçi məlumatını yenilə
         window.onload = function() {
             updateNavbar();
         };
