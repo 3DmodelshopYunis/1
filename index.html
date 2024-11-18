@@ -14,17 +14,96 @@
             justify-content: flex-start;
             background-color: #f4f4f4;
         }
+
+        /* Navbar stilini təyin edirik */
+        .navbar {
+            position: fixed; /* Navbar sabit olur */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000; /* Navbar hər şeydən üstə olacaq */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navbar-da yerləşən elementlər */
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        .navbar input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Axtarış bölməsi */
+        .search-bar {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Məzmun üçün əlavə stil */
+        .content {
+            margin-top: 80px; /* Navbar ilə üst hissənin üst-üstə düşməməsi üçün */
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Şəkillər üçün stil */
         img {
             width: 100%; /* Şəkillər ekrana uyğun böyüyür */
-            max-width: 1500px; /* Maksimum eni 600px olaraq məhdudlaşdırır */
+            max-width: 1500px; /* Maksimum eni 1500px olaraq məhdudlaşdırır */
             margin-bottom: 0px; /* Şəkillər arasında boşluq */
+        }
+
+        /* Hər bir düymənin dizaynı */
+        .btn {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <!-- Şəkillərin adlarını düzgün yazdığınızdan əmin olun -->
-    <img src="11.png" alt="First Image">
-    <img src="12.png" alt="Second Image">
-    <img src="13.png" alt="Third Image">
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <!-- Axtarış bölməsi -->
+        <div class="search-bar">
+            <input type="text" placeholder="Axtarış et...">
+        </div>
+        
+        <!-- Gmail daxil olma və qeydiyyat bölməsi -->
+        <div class="auth-links">
+            <a href="signin.html" class="btn">Sign In</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- Sayfanın Məzmunu -->
+    <div class="content">
+        <!-- Şəkillərin adlarını düzgün yazdığınızdan əmin olun -->
+        <img src="11.png" alt="First Image">
+        <img src="12.png" alt="Second Image">
+        <img src="13.png" alt="Third Image">
+    </div>
+
 </body>
 </html>
