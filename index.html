@@ -17,14 +17,14 @@
 
         /* Navbar stilini təyin edirik */
         .navbar {
-            position: fixed; /* Navbar sabit olur */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background-color: #333;
             color: white;
             padding: 10px 0;
-            z-index: 1000; /* Navbar hər şeydən üstə olacaq */
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,6 +46,18 @@
             border-radius: 5px;
         }
 
+        .navbar .auth-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .user-profile {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
         /* Axtarış bölməsi */
         .search-bar {
             flex-grow: 1;
@@ -54,16 +66,16 @@
 
         /* Məzmun üçün əlavə stil */
         .content {
-            margin-top: 80px; /* Navbar ilə üst hissənin üst-üstə düşməməsi üçün */
+            margin-top: 80px;
             padding: 20px;
             text-align: center;
         }
 
         /* Şəkillər üçün stil */
         img {
-            width: 100%; /* Şəkillər ekrana uyğun böyüyür */
-            max-width: 1500px; /* Maksimum eni 1500px olaraq məhdudlaşdırır */
-            margin-bottom: 0px; /* Şəkillər arasında boşluq */
+            width: 100%;
+            max-width: 1500px;
+            margin-bottom: 0px;
         }
 
         /* Hər bir düymənin dizaynı */
@@ -79,31 +91,161 @@
         .btn:hover {
             background-color: #45a049;
         }
+
+        /* Alt hissə dizaynı */
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* İstifadəçi giriş forması */
+        .form-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-container input[type="email"], .form-container input[type="password"] {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
     <div class="navbar">
-        <!-- Axtarış bölməsi -->
         <div class="search-bar">
             <input type="text" placeholder="Axtarış et...">
         </div>
-        
-        <!-- Gmail daxil olma və qeydiyyat bölməsi -->
         <div class="auth-links">
-            <a href="signin.html" class="btn">Sign In</a>
-            <a href="signup.html" class="btn">Sign Up</a>
+            <a href="#signInForm" class="btn">Sign In</a>
+            <a href="#signUpForm" class="btn">Sign Up</a>
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <span id="userEmail">Gmail: user@gmail.com</span>
+            </div>
         </div>
     </div>
 
     <!-- Sayfanın Məzmunu -->
     <div class="content">
-        <!-- Şəkillərin adlarını düzgün yazdığınızdan əmin olun -->
         <img src="11.png" alt="First Image">
         <img src="12.png" alt="Second Image">
         <img src="13.png" alt="Third Image">
     </div>
 
-</body>
-</html>
+    <!-- Sign In Forması -->
+    <div id="signInForm" class="form-container">
+        <h2>Sign In</h2>
+        <form id="signInFormSubmit">
+            <input type="email" id="signInEmail" placeholder="Gmail daxil edin" required>
+            <input type="password" id="signInPassword" placeholder="Parol" required>
+            <button type="submit">Daxil ol</button>
+        </form>
+    </div>
+
+    <!-- Sign Up Forması -->
+    <div id="signUpForm" class="form-container">
+        <h2>Sign Up</h2>
+        <form id="signUpFormSubmit">
+            <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
+            <input type="password" id="signUpPassword" placeholder="Parol" required>
+            <button type="submit">Qeydiyyatdan Keç</button>
+        </form>
+    </div>
+
+    <!-- Alt Hissə -->
+    <div class="footer">
+        <p>3D Configurators</p>
+        <p>3D eCommerce</p>
+        <p>3D Viewer</p>
+        <p>3D Advertising</p>
+        <p>Sketchfab for Teams</p>
+        <p>Customer Stories</p>
+        <p>Pricing</p>
+        <p>ECOSYSTEM</p>
+        <p>Exporters</p>
+        <p>Importers</p>
+        <p>Developers & API</p>
+        <p>Augmented Reality</p>
+        <p>Virtual Reality</p>
+        <p>STORE</p>
+        <p>Buy 3D models</p>
+        <p>Best Selling</p>
+        <p>Categories</p>
+        <p>Become a Seller on Fab</p>
+        <p>Free 3D Models</p>
+        <p>COMMUNITY</p>
+        <p>Explore</p>
+        <p>Help Center</p>
+        <p>Education</p>
+        <p>Museums</p>
+        <p>Blog</p>
+        <p>Sketchfab Masters</p>
+        <p>ABOUT</p>
+        <p>Company</p>
+        <p>Careers</p>
+        <p>Press Kit</p>
+        <p>Features</p>
+        <p>CONTACT US</p>
+        <p>© 2024, Sketchfab, Inc. All rights reserved.</p>
+        <p>Terms of use | Refund policy | Privacy policy | Sitemap</p>
+    </div>
+
+    <script>
+        // Formları işə salmaq üçün event listener
+        document.getElementById('signInFormSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            if (email && password) {
+                // Giriş et
+                localStorage.setItem('userEmail', email); // Gmail-i saxlayırıq
+                alert('Daxil oldunuz!');
+                updateNavbar();
+            }
+        });
+
+        document.getElementById('signUpFormSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            if (email && password) {
+                // Qeydiyyatdan keç
+                localStorage.setItem('userEmail', email); // Gmail-i saxlayırıq
+                alert('Qeydiyyatdan keçdiniz!');
+                updateNavbar();
+            }
+        });
+
+        // Navbar'dakı istifadəçi profilini güncellemə funksiyası
+        function updateNavbar() {
+            const userEmail = localStorage.getItem('userEmail');
+            const userProfile = document.getElementById('userProfile');
+            const signInButton = document.querySelector('.btn[href="#signInForm"]');
+            const signUpButton = document.querySelector('.btn[href="#signUpForm"]');
+
+            if (userEmail) {
+                document.getElementById('userEmail').textContent = `Gmail: ${userEmail}`;
+                userProfile.style.display = 'block'; // Profil görünsün
+                signInButton.style.display = 'none'; // Sign In düyməsini gizl
