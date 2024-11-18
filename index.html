@@ -3,300 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>Image Sequence</title>
     <style>
-        /* Ümumi Stil */
+        /* Body və ümumi tərtibat */
         body {
             margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
-        /* Navbar */
+        /* Navbar dizaynı */
         .navbar {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
             padding: 10px 20px;
-            color: #fff;
             position: fixed;
             top: 0;
-            width: 100%;
             z-index: 1000;
         }
 
-        .navbar .logo img {
-            height: 50px;
-        }
-
-        .navbar .links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 16px;
-        }
-
-        .navbar .links a:hover {
-            text-decoration: underline;
-        }
-
-        .navbar .auth-links a,
-        .navbar .auth-links button {
-            color: #fff;
-            text-decoration: none;
-            background-color: #444;
-            padding: 10px 15px;
-            margin: 0 5px;
-            border-radius: 5px;
+        .navbar .search-bar input {
+            padding: 8px;
             border: none;
-            cursor: pointer;
-            font-size: 14px;
+            border-radius: 4px;
+            width: 250px;
         }
 
-        .navbar .auth-links a:hover,
-        .navbar .auth-links button:hover {
-            background-color: #555;
+        .navbar .auth-links a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
         }
 
-        .navbar .profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .navbar .auth-links a:hover {
+            background-color: #444;
         }
 
-        .navbar .profile img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        /* Banner */
-        .banner {
-            margin-top: 70px;
-            text-align: center;
-            background-image: url('banner.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 400px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        .banner h1 {
-            font-size: 50px;
-        }
-
-        /* Content */
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        /* Modal üçün stil */
-        .modal {
+        .navbar .auth-links .user-profile {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .navbar .auth-links .sign-out-btn {
+            display: none;
+            background-color: #ff4b5c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .auth-links .sign-out-btn:hover {
+            background-color: #ff2b3c;
+        }
+
+        /* Formaların üslubu */
+        .form-container {
             padding: 20px;
-            border-radius: 8px;
-            z-index: 2000;
+            margin-top: 100px; /* Navbar-ı üstdə saxlamaq üçün boşluq */
+            display: none;
         }
 
-        .modal h2 {
-            text-align: center;
-        }
-
-        .modal form input,
-        .modal form button {
+        .form-container form input,
+        .form-container form button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
+            font-size: 16px;
+            border-radius: 4px;
             border: 1px solid #ddd;
-            border-radius: 5px;
         }
 
-        .modal form button {
+        .form-container form button {
             background-color: #333;
             color: white;
             cursor: pointer;
         }
 
-        .modal form button:hover {
-            background-color: #555;
+        .form-container form button:hover {
+            background-color: #444;
         }
 
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+        .profile-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        /* Alt Hissə */
+        .footer {
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
     <div class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo">
-        </div>
-        <div class="links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
+        <div class="search-bar">
+            <input type="text" placeholder="Axtarış et...">
         </div>
         <div class="auth-links">
             <a href="javascript:void(0)" id="signInBtn">Sign In</a>
             <a href="javascript:void(0)" id="signUpBtn">Sign Up</a>
-            <div id="profileInfo" class="profile" style="display: none;">
-                <img id="profileImage" src="default-profile.png" alt="Profile">
-                <span id="nickname"></span>
-                <button id="signOutBtn">Sign Out</button>
+            <div id="userProfile" class="user-profile">
+                <div class="profile-container">
+                    <img id="profileImage" src="default-profile.png" alt="Profile">
+                    <span id="userEmail">Gmail: user@gmail.com</span>
+                </div>
             </div>
+            <a href="javascript:void(0)" id="signOutBtn" class="sign-out-btn">Sign Out</a>
         </div>
     </div>
 
-    <!-- Banner -->
-    <div class="banner">
-        <h1>Welcome to My Website</h1>
-    </div>
-
-    <!-- Content -->
+    <!-- Sayfanın Məzmunu -->
     <div class="content">
-        <h2>Our Services</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel libero nec massa pretium ultricies.</p>
+        <img src="11.png" alt="First Image">
+        <img src="12.png" alt="Second Image">
+        <img src="13.png" alt="Third Image">
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>© 2024, My Website. All rights reserved.</p>
-    </div>
-
-    <!-- Modallar -->
-    <div id="signInModal" class="modal">
+    <!-- Sign In Forması -->
+    <div id="signInForm" class="form-container">
         <h2>Sign In</h2>
-        <form id="signInForm">
-            <input type="email" id="signInEmail" placeholder="Enter Gmail" required>
-            <input type="password" id="signInPassword" placeholder="Enter Password" required>
-            <button type="submit">Sign In</button>
+        <form id="signInFormSubmit">
+            <input type="email" id="signInEmail" placeholder="Gmail daxil edin" required>
+            <input type="password" id="signInPassword" placeholder="Parol" required>
+            <button type="submit">Daxil ol</button>
         </form>
     </div>
 
-    <div id="signUpModal" class="modal">
+    <!-- Sign Up Forması -->
+    <div id="signUpForm" class="form-container">
         <h2>Sign Up</h2>
-        <form id="signUpForm">
-            <input type="email" id="signUpEmail" placeholder="Enter Gmail" required>
-            <input type="password" id="signUpPassword" placeholder="Enter Password" required>
-            <input type="text" id="nickName" placeholder="Enter Nickname" required>
-            <button type="submit">Sign Up</button>
+        <form id="signUpFormSubmit">
+            <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
+            <input type="password" id="signUpPassword" placeholder="Parol" required>
+            <input type="text" id="nickName" placeholder="Nick Name" required>
+            <button type="submit">Qeydiyyatdan Keç</button>
         </form>
     </div>
 
-    <div class="overlay" id="overlay"></div>
+    <!-- Alt Hissə -->
+    <div class="footer">
+        <p>© 2024, Sketchfab, Inc. All rights reserved.</p>
+    </div>
 
     <script>
-        // Modal və Navbar funksionallıqları
-        const signInBtn = document.getElementById('signInBtn');
-        const signUpBtn = document.getElementById('signUpBtn');
-        const signOutBtn = document.getElementById('signOutBtn');
-        const signInModal = document.getElementById('signInModal');
-        const signUpModal = document.getElementById('signUpModal');
-        const overlay = document.getElementById('overlay');
-        const profileInfo = document.getElementById('profileInfo');
-        const profileImage = document.getElementById('profileImage');
-        const nicknameSpan = document.getElementById('nickname');
-
-        function openModal(modal) {
-            modal.style.display = 'block';
-            overlay.style.display = 'block';
-        }
-
-        function closeModal() {
-            signInModal.style.display = 'none';
-            signUpModal.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-
-        function updateNavbar() {
-            const email = localStorage.getItem('userEmail');
-            const nickname = localStorage.getItem('userNickName');
-
-            if (email && nickname) {
-                profileInfo.style.display = 'flex';
-                signInBtn.style.display = 'none';
-                signUpBtn.style.display = 'none';
-                nicknameSpan.textContent = nickname;
-            } else {
-                profileInfo.style.display = 'none';
-                signInBtn.style.display = 'inline-block';
-                signUpBtn.style.display = 'inline-block';
-            }
-        }
-
-        document.getElementById('signInForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // Sign In formu
+        document.getElementById('signInFormSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
             const email = document.getElementById('signInEmail').value;
-            if (email) {
+            const password = document.getElementById('signInPassword').value;
+            if (email && password) {
                 localStorage.setItem('userEmail', email);
                 localStorage.setItem('userNickName', 'User');
-                alert('Successfully Signed In');
-                closeModal();
+                alert('Daxil oldunuz!');
                 updateNavbar();
             }
         });
 
-        document.getElementById('signUpForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // Sign Up formu
+        document.getElementById('signUpFormSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
             const email = document.getElementById('signUpEmail').value;
-            const nickname = document.getElementById('nickName').value;
-            if (email && nickname) {
+            const password = document.getElementById('signUpPassword').value;
+            const nickName = document.getElementById('nickName').value;
+            if (email && password && nickName) {
                 localStorage.setItem('userEmail', email);
-                localStorage.setItem('userNickName', nickname);
-                alert('Successfully Signed Up');
-                closeModal();
+                localStorage.setItem('userNickName', nickName);
+                alert('Qeydiyyatdan keçdiniz!');
                 updateNavbar();
             }
         });
 
-        signOutBtn.addEventListener('click', function () {
-            localStorage.clear();
-            alert('Successfully Signed Out');
+        // Profilin göstərilməsi və düymələrin dəyişməsi
+        function updateNavbar() {
+            const userEmail = localStorage.getItem('userEmail');
+            const userNickName = localStorage.getItem('userNickName');
+            const userProfile = document.getElementById('userProfile');
+            const signInButton = document.getElementById('signInBtn');
+            const signUpButton = document.getElementById('signUpBtn');
+            const signOutButton = document.getElementById('signOutBtn');
+            const profileText = document.getElementById('userEmail');
+
+            if (userEmail) {
+                userProfile.style.display = 'flex';
+                signOutButton.style.display = 'inline-block';
+                profileText.textContent = `${userNickName} (${userEmail})`;
+                signInButton.style.display = 'none';
+                signUpButton.style.display = 'none';
+            } else {
+                userProfile.style.display = 'none';
+                signOutButton.style.display = 'none';
+                signInButton.style.display = 'inline-block';
+                signUpButton.style.display = 'inline-block';
+            }
+        }
+
+        // Sign Out düyməsi
+        document.getElementById('signOutBtn').addEventListener('click', function() {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userNickName');
+            alert('Hesabdan çıxış edildi!');
             updateNavbar();
+            location.reload();
         });
 
-        signInBtn.addEventListener('click', function () {
-            openModal(signInModal);
+        // Formları gizlətmək və göstəriciləri dəyişdirmək
+        document.getElementById('signInBtn').addEventListener('click', function() {
+            document.getElementById('signInForm').style.display = 'block';
+            document.getElementById('signUpForm').style.display = 'none';
         });
 
-        signUpBtn.addEventListener('click', function () {
-            openModal(signUpModal);
+        document.getElementById('signUpBtn').addEventListener('click', function() {
+            document.getElementById('signUpForm').style.display = 'block';
+            document.getElementById('signInForm').style.display = 'none';
         });
 
-        overlay.addEventListener('click', closeModal);
-
-        // Saytı yükləyərkən Navbarı yenilə
-        updateNavbar();
+        // Dəyişiklikləri başlatmaq
+        window.onload = updateNavbar;
     </script>
 </body>
 </html>
