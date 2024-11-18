@@ -3,102 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In & Sign Up</title>
+    <title>My Website</title>
     <style>
+        /* Ümumi Stil */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
+        /* Navbar */
         .navbar {
-            width: 100%;
-            background-color: #333;
-            color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #333;
             padding: 10px 20px;
+            color: #fff;
             position: fixed;
             top: 0;
+            width: 100%;
             z-index: 1000;
         }
 
-        .navbar .auth-links a {
+        .navbar .logo img {
+            height: 50px;
+        }
+
+        .navbar .links a {
             color: #fff;
-            padding: 10px 20px;
             text-decoration: none;
-            border-radius: 5px;
-            margin: 0 10px;
-            transition: background-color 0.3s;
-        }
-
-        .navbar .auth-links a:hover {
-            background-color: #444;
-        }
-
-        .navbar .auth-links .profile-info {
-            display: none;
+            margin: 0 15px;
             font-size: 16px;
+        }
+
+        .navbar .links a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .auth-links a,
+        .navbar .auth-links button {
             color: #fff;
-            margin-right: 10px;
-        }
-
-        .navbar .auth-links .profile-info span {
-            margin-left: 10px;
-        }
-
-        .navbar .auth-links .sign-out-btn {
-            display: none;
-            background-color: #ff4b5c;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
             text-decoration: none;
+            background-color: #444;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 14px;
         }
 
-        .navbar .auth-links .sign-out-btn:hover {
-            background-color: #ff2b3c;
+        .navbar .auth-links a:hover,
+        .navbar .auth-links button:hover {
+            background-color: #555;
         }
 
+        .navbar .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        /* Banner */
+        .banner {
+            margin-top: 70px;
+            text-align: center;
+            background-image: url('banner.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .banner h1 {
+            font-size: 50px;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Modal üçün stil */
         .modal {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1001;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
+            width: 400px;
+            background: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 2000;
         }
 
         .modal h2 {
-            margin: 0 0 20px 0;
+            text-align: center;
         }
 
-        .modal input,
-        .modal button {
+        .modal form input,
+        .modal form button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            font-size: 16px;
-            border-radius: 4px;
             border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
-        .modal button {
+        .modal form button {
             background-color: #333;
             color: white;
             cursor: pointer;
         }
 
-        .modal button:hover {
-            background-color: #444;
+        .modal form button:hover {
+            background-color: #555;
         }
 
         .overlay {
@@ -114,44 +155,68 @@
     </style>
 </head>
 <body>
-
     <!-- Navbar -->
     <div class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
         <div class="auth-links">
             <a href="javascript:void(0)" id="signInBtn">Sign In</a>
             <a href="javascript:void(0)" id="signUpBtn">Sign Up</a>
-            <div id="profileInfo" class="profile-info">
-                <span id="profileNickname"></span>
+            <div id="profileInfo" class="profile" style="display: none;">
+                <img id="profileImage" src="default-profile.png" alt="Profile">
+                <span id="nickname"></span>
+                <button id="signOutBtn">Sign Out</button>
             </div>
-            <a href="javascript:void(0)" id="signOutBtn" class="sign-out-btn">Sign Out</a>
         </div>
     </div>
 
-    <!-- Sign In Modal -->
+    <!-- Banner -->
+    <div class="banner">
+        <h1>Welcome to My Website</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Our Services</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel libero nec massa pretium ultricies.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024, My Website. All rights reserved.</p>
+    </div>
+
+    <!-- Modallar -->
     <div id="signInModal" class="modal">
         <h2>Sign In</h2>
         <form id="signInForm">
-            <input type="email" id="signInEmail" placeholder="Gmail daxil edin" required>
-            <input type="password" id="signInPassword" placeholder="Parol" required>
-            <button type="submit">Daxil ol</button>
+            <input type="email" id="signInEmail" placeholder="Enter Gmail" required>
+            <input type="password" id="signInPassword" placeholder="Enter Password" required>
+            <button type="submit">Sign In</button>
         </form>
     </div>
 
-    <!-- Sign Up Modal -->
     <div id="signUpModal" class="modal">
         <h2>Sign Up</h2>
         <form id="signUpForm">
-            <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
-            <input type="password" id="signUpPassword" placeholder="Parol" required>
-            <input type="text" id="signUpNickname" placeholder="Nick Name" required>
-            <button type="submit">Qeydiyyatdan Keç</button>
+            <input type="email" id="signUpEmail" placeholder="Enter Gmail" required>
+            <input type="password" id="signUpPassword" placeholder="Enter Password" required>
+            <input type="text" id="nickName" placeholder="Enter Nickname" required>
+            <button type="submit">Sign Up</button>
         </form>
     </div>
 
-    <!-- Overlay -->
-    <div id="overlay" class="overlay"></div>
+    <div class="overlay" id="overlay"></div>
 
     <script>
+        // Modal və Navbar funksionallıqları
         const signInBtn = document.getElementById('signInBtn');
         const signUpBtn = document.getElementById('signUpBtn');
         const signOutBtn = document.getElementById('signOutBtn');
@@ -159,7 +224,8 @@
         const signUpModal = document.getElementById('signUpModal');
         const overlay = document.getElementById('overlay');
         const profileInfo = document.getElementById('profileInfo');
-        const profileNickname = document.getElementById('profileNickname');
+        const profileImage = document.getElementById('profileImage');
+        const nicknameSpan = document.getElementById('nickname');
 
         function openModal(modal) {
             modal.style.display = 'block';
@@ -174,52 +240,63 @@
 
         function updateNavbar() {
             const email = localStorage.getItem('userEmail');
-            const nickname = localStorage.getItem('userNickname');
-            if (email) {
-                profileNickname.textContent = `${nickname} (${email})`;
-                profileInfo.style.display = 'inline-block';
-                signOutBtn.style.display = 'inline-block';
+            const nickname = localStorage.getItem('userNickName');
+
+            if (email && nickname) {
+                profileInfo.style.display = 'flex';
                 signInBtn.style.display = 'none';
                 signUpBtn.style.display = 'none';
+                nicknameSpan.textContent = nickname;
             } else {
                 profileInfo.style.display = 'none';
-                signOutBtn.style.display = 'none';
                 signInBtn.style.display = 'inline-block';
                 signUpBtn.style.display = 'inline-block';
             }
         }
 
-        signInBtn.addEventListener('click', () => openModal(signInModal));
-        signUpBtn.addEventListener('click', () => openModal(signUpModal));
+        document.getElementById('signInForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            if (email) {
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userNickName', 'User');
+                alert('Successfully Signed In');
+                closeModal();
+                updateNavbar();
+            }
+        });
+
+        document.getElementById('signUpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const nickname = document.getElementById('nickName').value;
+            if (email && nickname) {
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userNickName', nickname);
+                alert('Successfully Signed Up');
+                closeModal();
+                updateNavbar();
+            }
+        });
+
+        signOutBtn.addEventListener('click', function () {
+            localStorage.clear();
+            alert('Successfully Signed Out');
+            updateNavbar();
+        });
+
+        signInBtn.addEventListener('click', function () {
+            openModal(signInModal);
+        });
+
+        signUpBtn.addEventListener('click', function () {
+            openModal(signUpModal);
+        });
+
         overlay.addEventListener('click', closeModal);
 
-        document.getElementById('signInForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const email = document.getElementById('signInEmail').value;
-            localStorage.setItem('userEmail', email);
-            localStorage.setItem('userNickname', 'User');
-            closeModal();
-            updateNavbar();
-        });
-
-        document.getElementById('signUpForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const email = document.getElementById('signUpEmail').value;
-            const nickname = document.getElementById('signUpNickname').value;
-            localStorage.setItem('userEmail', email);
-            localStorage.setItem('userNickname', nickname);
-            closeModal();
-            updateNavbar();
-        });
-
-        signOutBtn.addEventListener('click', () => {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userNickname');
-            updateNavbar();
-        });
-
-        window.onload = updateNavbar;
+        // Saytı yükləyərkən Navbarı yenilə
+        updateNavbar();
     </script>
-
 </body>
 </html>
