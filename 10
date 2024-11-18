@@ -15,14 +15,13 @@
             background-color: #f4f4f4;
         }
         img {
-            width: 100%; /* Şəkillər ekrana uyğun böyüyür */
-            max-width: 600px; /* Maksimum eni 600px olaraq məhdudlaşdırır */
-            margin-bottom: 10px; /* Şəkillər arasında boşluq */
+            width: 100%; 
+            max-width: 600px; 
+            margin-bottom: 10px; 
         }
     </style>
 </head>
 <body>
-    <!-- Şəkillərin adlarını düzəldirik: 1.png, 2.png, 3.png -->
     <img src="1.png" alt="First Image">
     <img src="2.png" alt="Second Image">
     <img src="3.png" alt="Third Image">
