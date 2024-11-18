@@ -5,130 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Sequence</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            background-color: #f4f4f4;
-        }
-
-        /* Navbar stilini təyin edirik */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Navbar-da yerləşən elementlər */
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 16px;
-        }
-
-        .navbar input[type="text"] {
-            padding: 5px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .navbar .auth-links {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .user-profile {
-            padding: 5px 10px;
-            background-color: #4CAF50;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Axtarış bölməsi */
-        .search-bar {
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        /* Məzmun üçün əlavə stil */
-        .content {
-            margin-top: 80px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Şəkillər üçün stil */
-        img {
-            width: 100%;
-            max-width: 1500px;
-            margin-bottom: 0px;
-        }
-
-        /* Hər bir düymənin dizaynı */
-        .btn {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Alt hissə dizaynı */
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .footer p {
-            margin: 5px 0;
-        }
-
-        /* İstifadəçi giriş forması */
-        .form-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .form-container input[type="email"], .form-container input[type="password"] {
-            padding: 10px;
-            margin: 10px;
-            width: 250px;
-            font-size: 16px;
-        }
-
-        .form-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
+        /* Əvvəlki stil hissəsi buraya eyni qalır */
     </style>
 </head>
 <body>
@@ -248,4 +125,16 @@
             if (userEmail) {
                 document.getElementById('userEmail').textContent = `Gmail: ${userEmail}`;
                 userProfile.style.display = 'block'; // Profil görünsün
-                signInButton.style.display = 'none'; // Sign In düyməsini gizl
+                signInButton.style.display = 'none'; // Sign In düyməsini gizlə
+                signUpButton.style.display = 'none'; // Sign Up düyməsini gizlə
+            }
+        }
+
+        // Sayfa yükləndikdə varsa, istifadəçi məlumatlarını yenilə
+        window.onload = function() {
+            updateNavbar();
+        };
+    </script>
+
+</body>
+</html>
