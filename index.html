@@ -53,6 +53,21 @@
             color: #fff;
         }
 
+        .navbar .auth-links .sign-out-btn {
+            display: none;
+            background-color: #ff4b5c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .auth-links .sign-out-btn:hover {
+            background-color: #ff2b3c;
+        }
+
         /* Formaların üslubu */
         .form-container {
             padding: 20px;
@@ -80,7 +95,6 @@
             background-color: #444;
         }
 
-        /* Profilin və digər düymələrin dizaynı */
         .profile-container {
             display: flex;
             align-items: center;
@@ -100,10 +114,6 @@
             color: white;
             text-align: center;
         }
-
-        .footer p {
-            margin: 5px 0;
-        }
     </style>
 </head>
 <body>
@@ -122,6 +132,7 @@
                     <span id="userEmail">Gmail: user@gmail.com</span>
                 </div>
             </div>
+            <a href="javascript:void(0)" id="signOutBtn" class="sign-out-btn">Sign Out</a>
         </div>
     </div>
 
@@ -140,10 +151,6 @@
             <input type="password" id="signInPassword" placeholder="Parol" required>
             <button type="submit">Daxil ol</button>
         </form>
-        <div class="social-login">
-            <button onclick="signInWithGmail()">Sign in with Gmail</button>
-            <button onclick="signInWithFacebook()">Sign in with Facebook</button>
-        </div>
     </div>
 
     <!-- Sign Up Forması -->
@@ -159,40 +166,7 @@
 
     <!-- Alt Hissə -->
     <div class="footer">
-        <p>3D Configurators</p>
-        <p>3D eCommerce</p>
-        <p>3D Viewer</p>
-        <p>3D Advertising</p>
-        <p>Sketchfab for Teams</p>
-        <p>Customer Stories</p>
-        <p>Pricing</p>
-        <p>ECOSYSTEM</p>
-        <p>Exporters</p>
-        <p>Importers</p>
-        <p>Developers & API</p>
-        <p>Augmented Reality</p>
-        <p>Virtual Reality</p>
-        <p>STORE</p>
-        <p>Buy 3D models</p>
-        <p>Best Selling</p>
-        <p>Categories</p>
-        <p>Become a Seller on Fab</p>
-        <p>Free 3D Models</p>
-        <p>COMMUNITY</p>
-        <p>Explore</p>
-        <p>Help Center</p>
-        <p>Education</p>
-        <p>Museums</p>
-        <p>Blog</p>
-        <p>Sketchfab Masters</p>
-        <p>ABOUT</p>
-        <p>Company</p>
-        <p>Careers</p>
-        <p>Press Kit</p>
-        <p>Features</p>
-        <p>CONTACT US</p>
         <p>© 2024, Sketchfab, Inc. All rights reserved.</p>
-        <p>Terms of use | Refund policy | Privacy policy | Sitemap</p>
     </div>
 
     <script>
@@ -223,27 +197,38 @@
             }
         });
 
-        // Profilin göstərilməsi
+        // Profilin göstərilməsi və düymələrin dəyişməsi
         function updateNavbar() {
             const userEmail = localStorage.getItem('userEmail');
             const userNickName = localStorage.getItem('userNickName');
             const userProfile = document.getElementById('userProfile');
             const signInButton = document.getElementById('signInBtn');
             const signUpButton = document.getElementById('signUpBtn');
-            const profileImage = document.getElementById('profileImage');
+            const signOutButton = document.getElementById('signOutBtn');
             const profileText = document.getElementById('userEmail');
 
             if (userEmail) {
                 userProfile.style.display = 'flex';
+                signOutButton.style.display = 'inline-block';
                 profileText.textContent = `${userNickName} (${userEmail})`;
                 signInButton.style.display = 'none';
                 signUpButton.style.display = 'none';
             } else {
                 userProfile.style.display = 'none';
+                signOutButton.style.display = 'none';
                 signInButton.style.display = 'inline-block';
                 signUpButton.style.display = 'inline-block';
             }
         }
+
+        // Sign Out düyməsi
+        document.getElementById('signOutBtn').addEventListener('click', function() {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userNickName');
+            alert('Hesabdan çıxış edildi!');
+            updateNavbar();
+            location.reload();
+        });
 
         // Formları gizlətmək və göstəriciləri dəyişdirmək
         document.getElementById('signInBtn').addEventListener('click', function() {
