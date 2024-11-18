@@ -53,17 +53,11 @@
             color: #fff;
         }
 
-        /* Şəkillərin göstərilməsi */
-        img {
-            width: 100%;
-            max-width: 1500px;
-            margin-bottom: 0;
-        }
-
-        /* Formaların tərtibatı */
+        /* Formaların üslubu */
         .form-container {
             padding: 20px;
             margin-top: 100px; /* Navbar-ı üstdə saxlamaq üçün boşluq */
+            display: none;
         }
 
         .form-container form input,
@@ -86,7 +80,20 @@
             background-color: #444;
         }
 
-        /* Aşağı hissə */
+        /* Profilin və digər düymələrin dizaynı */
+        .profile-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        /* Alt Hissə */
         .footer {
             padding: 20px;
             background-color: #333;
@@ -107,10 +114,13 @@
             <input type="text" placeholder="Axtarış et...">
         </div>
         <div class="auth-links">
-            <a href="#signInForm" class="btn" id="signInBtn">Sign In</a>
-            <a href="#signUpForm" class="btn" id="signUpBtn">Sign Up</a>
+            <a href="javascript:void(0)" id="signInBtn">Sign In</a>
+            <a href="javascript:void(0)" id="signUpBtn">Sign Up</a>
             <div id="userProfile" class="user-profile">
-                <span id="userEmail">Gmail: user@gmail.com</span>
+                <div class="profile-container">
+                    <img id="profileImage" src="default-profile.png" alt="Profile">
+                    <span id="userEmail">Gmail: user@gmail.com</span>
+                </div>
             </div>
         </div>
     </div>
@@ -130,6 +140,10 @@
             <input type="password" id="signInPassword" placeholder="Parol" required>
             <button type="submit">Daxil ol</button>
         </form>
+        <div class="social-login">
+            <button onclick="signInWithGmail()">Sign in with Gmail</button>
+            <button onclick="signInWithFacebook()">Sign in with Facebook</button>
+        </div>
     </div>
 
     <!-- Sign Up Forması -->
@@ -138,6 +152,7 @@
         <form id="signUpFormSubmit">
             <input type="email" id="signUpEmail" placeholder="Gmail daxil edin" required>
             <input type="password" id="signUpPassword" placeholder="Parol" required>
+            <input type="text" id="nickName" placeholder="Nick Name" required>
             <button type="submit">Qeydiyyatdan Keç</button>
         </form>
     </div>
@@ -187,8 +202,8 @@
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
             if (email && password) {
-                // Gmail məlumatını saxlayırıq
                 localStorage.setItem('userEmail', email);
+                localStorage.setItem('userNickName', 'User');
                 alert('Daxil oldunuz!');
                 updateNavbar();
             }
@@ -199,34 +214,50 @@
             event.preventDefault();
             const email = document.getElementById('signUpEmail').value;
             const password = document.getElementById('signUpPassword').value;
-            if (email && password) {
-                // Gmail məlumatını saxlayırıq
+            const nickName = document.getElementById('nickName').value;
+            if (email && password && nickName) {
                 localStorage.setItem('userEmail', email);
+                localStorage.setItem('userNickName', nickName);
                 alert('Qeydiyyatdan keçdiniz!');
                 updateNavbar();
             }
         });
 
-        // Navbar-da istifadəçi məlumatını göstərmək
+        // Profilin göstərilməsi
         function updateNavbar() {
             const userEmail = localStorage.getItem('userEmail');
+            const userNickName = localStorage.getItem('userNickName');
             const userProfile = document.getElementById('userProfile');
             const signInButton = document.getElementById('signInBtn');
             const signUpButton = document.getElementById('signUpBtn');
+            const profileImage = document.getElementById('profileImage');
+            const profileText = document.getElementById('userEmail');
 
             if (userEmail) {
-                document.getElementById('userEmail').textContent = `Gmail: ${userEmail}`;
-                userProfile.style.display = 'block'; // Profil göstərilsin
-                signInButton.style.display = 'none'; // Sign In düyməsini gizlə
-                signUpButton.style.display = 'none'; // Sign Up düyməsini gizlə
+                userProfile.style.display = 'flex';
+                profileText.textContent = `${userNickName} (${userEmail})`;
+                signInButton.style.display = 'none';
+                signUpButton.style.display = 'none';
+            } else {
+                userProfile.style.display = 'none';
+                signInButton.style.display = 'inline-block';
+                signUpButton.style.display = 'inline-block';
             }
         }
 
-        // Sayfa yükləndikdə istifadəçi məlumatını yenilə
-        window.onload = function() {
-            updateNavbar();
-        };
-    </script>
+        // Formları gizlətmək və göstəriciləri dəyişdirmək
+        document.getElementById('signInBtn').addEventListener('click', function() {
+            document.getElementById('signInForm').style.display = 'block';
+            document.getElementById('signUpForm').style.display = 'none';
+        });
 
+        document.getElementById('signUpBtn').addEventListener('click', function() {
+            document.getElementById('signUpForm').style.display = 'block';
+            document.getElementById('signInForm').style.display = 'none';
+        });
+
+        // Dəyişiklikləri başlatmaq
+        window.onload = updateNavbar;
+    </script>
 </body>
 </html>
