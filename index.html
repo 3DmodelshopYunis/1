@@ -8,15 +8,18 @@
         body {
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Saytın scroll olmasının qarşısını alır */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
+            height: 100vh; /* Bütün ekranı əhatə etsin */
             background-color: #f4f4f4;
         }
         img {
-            width: 100%; /* Şəkillər ekrana uyğun böyüyür */
-            max-width: 900px; /* Maksimum eni 600px olaraq məhdudlaşdırır */
+            width: 100vw;  /* Ekranın tam enini tutur */
+            height: 100vh; /* Ekranın tam hündürlüyünü tutur */
+            object-fit: cover; /* Şəkilin eyni vaxtda həm genişliyini, həm də hündürlüyünü əhatə etməsini təmin edir */
             margin-bottom: 10px; /* Şəkillər arasında boşluq */
         }
     </style>
